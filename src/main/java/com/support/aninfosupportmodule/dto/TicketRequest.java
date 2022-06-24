@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TicketRequest {
+
     private String title;
-
     private String description;
-
     private Integer severity;
-
-    private Integer assignedEmployee;
-
+    private Long assignedEmployeeId;
     private Category category;
+    private Long clientId;
+    private Long productId;
+    private Long versionId;
 }
