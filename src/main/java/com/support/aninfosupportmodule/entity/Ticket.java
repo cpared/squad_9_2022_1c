@@ -16,28 +16,27 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private String title;
-
     private String description;
-
     private Integer severity;
-
-    private Integer assignedEmployee;
-
+    private Long assignedEmployeeId;
     private Category category;
-
+    private Long clientId;
+    private Long productId;
+    private Long versionId;
     private ZonedDateTime creationDate;
-
     private ZonedDateTime lastUpdate;
-
     private ZonedDateTime closingDate;
 
     public Ticket(TicketRequest ticketRequest){
         title = ticketRequest.getTitle();
         description = ticketRequest.getDescription();
         severity = ticketRequest.getSeverity();
+        assignedEmployeeId = ticketRequest.getAssignedEmployeeId();
         category = ticketRequest.getCategory();
+        clientId = ticketRequest.getClientId();
+        productId = ticketRequest.getProductId();
+        versionId = ticketRequest.getVersionId();
         creationDate = ZonedDateTime.now();
         lastUpdate = ZonedDateTime.now();
     }

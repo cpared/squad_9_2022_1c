@@ -13,8 +13,6 @@ public class Version {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
-
     private String name;
-
     private ZonedDateTime releaseDate;
 }
