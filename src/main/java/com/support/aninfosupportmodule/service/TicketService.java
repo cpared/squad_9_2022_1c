@@ -6,6 +6,9 @@ import com.support.aninfosupportmodule.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TicketService {
@@ -16,5 +19,14 @@ public class TicketService {
         Ticket ticket = new Ticket(ticketRequest);
         ticketRepository.save(ticket);
         return ticket;
+    }
+
+    public List<Ticket> getTickets(){
+        List<Ticket> tickets = (List<Ticket>) ticketRepository.findAll();
+        return tickets;
+    }
+
+    public Optional<Ticket> getTicketById(Integer ticketId) {
+        return ticketRepository.findById(ticketId);
     }
 }
