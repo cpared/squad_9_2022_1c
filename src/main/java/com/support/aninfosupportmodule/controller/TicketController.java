@@ -16,7 +16,7 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    @PostMapping("/v1/soporte/tickets")
+    @PostMapping
     public Ticket createTicket(@RequestBody TicketRequest ticketRequest) {
         System.out.println(ticketRequest);
         return ticketService.create(ticketRequest);
@@ -27,7 +27,7 @@ public class TicketController {
         return ticketService.getTickets();
     }
 
-    @GetMapping("/:{ticketId}")
+    @GetMapping("{ticketId}")
     public Optional<Ticket> getTicketById(@PathVariable Integer ticketId) {
         return ticketService.getTicketById(ticketId);
     }
