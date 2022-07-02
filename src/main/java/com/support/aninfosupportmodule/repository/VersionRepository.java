@@ -3,18 +3,18 @@ package com.support.aninfosupportmodule.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.support.aninfosupportmodule.dto.Product;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.ResourceUtils;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
 @Repository
 public class VersionRepository {
 
-    private final static String FILEPATH = "classpath:products.json";
+    private final static String FILEPATH = "resources/products.json";
     private final HashMap<Long, Product> PRODUCTS = new HashMap<>();
 
     public VersionRepository() throws IOException {
@@ -23,10 +23,7 @@ public class VersionRepository {
 
     private void loadProducts() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-
-        File file = ResourceUtils.getFile(FILEPATH);
-
-        if (file.length() == 0) return;
+        InputStream file = new ClassPathResource(FILEPATH).getInputStream();
         List<Product> productsBuff = mapper.readValue(file, new TypeReference<>() {});
 
         productsBuff.forEach(p -> PRODUCTS.put(p.getId(), p));
