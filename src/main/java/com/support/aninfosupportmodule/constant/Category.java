@@ -7,3 +7,4 @@ public enum Category {
     @JsonProperty("error")
     ERROR
 }
+
