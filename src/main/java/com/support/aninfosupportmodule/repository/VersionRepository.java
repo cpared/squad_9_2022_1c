@@ -3,11 +3,11 @@ package com.support.aninfosupportmodule.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.support.aninfosupportmodule.dto.Product;
-import com.support.aninfosupportmodule.exception.InternalServerException;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,33 +15,24 @@ import java.util.List;
 public class VersionRepository {
 
     private final static String FILEPATH = "classpath:products.json";
+    private final HashMap<Long, Product> PRODUCTS = new HashMap<>();
 
-    private List<Product> productsBuff = new ArrayList<>();
-
-    private HashMap<Long, Product> products = new HashMap<>();
-
-    public VersionRepository() throws InternalServerException {
+    public VersionRepository() throws IOException {
         loadProducts();
     }
 
-    private void loadProducts() throws InternalServerException {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
+    private void loadProducts() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
 
-            if(ResourceUtils.getFile(FILEPATH).length() == 0) return;
-            productsBuff = mapper.readValue(ResourceUtils.getFile(FILEPATH), new TypeReference<>() {});
+        File file = ResourceUtils.getFile(FILEPATH);
 
-            for(int i = 0; i < productsBuff.size(); i++){
-                products.put(productsBuff.get(i).getId(), productsBuff.get(i));
-            }
+        if (file.length() == 0) return;
+        List<Product> productsBuff = mapper.readValue(file, new TypeReference<>() {});
 
-        } catch (Exception ex){
-            ex.printStackTrace();
-            throw new InternalServerException("File Error");
-        }
+        productsBuff.forEach(p -> PRODUCTS.put(p.getId(), p));
     }
 
     public List<String> getVersionsByProductId(Long productId) {
-        return products.get(productId).getVersions();
+        return PRODUCTS.get(productId).getVersions();
     }
 }
