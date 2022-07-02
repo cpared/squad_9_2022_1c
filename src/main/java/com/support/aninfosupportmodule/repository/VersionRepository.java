@@ -30,6 +30,14 @@ public class VersionRepository {
     }
 
     public List<String> getVersionsByProductId(Long productId) {
-        return PRODUCTS.get(productId).getVersions();
+        return getProductById(productId).getVersions();
+    }
+
+    public HashMap<Long, Product> getProducts() {
+        return PRODUCTS;
+    }
+
+    public Product getProductById(Long productId) {
+        return PRODUCTS.get(productId);
     }
 }
