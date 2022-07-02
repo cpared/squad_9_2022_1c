@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class VersionRepository {
 
-    private final static String FILEPATH = "resources/products.json";
+    private final static String FILEPATH = "products.json";
     private final HashMap<Long, Product> PRODUCTS = new HashMap<>();
 
     public VersionRepository() throws IOException {
