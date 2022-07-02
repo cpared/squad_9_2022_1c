@@ -12,7 +12,6 @@ public class VersionService {
     private final VersionRepository versionRepository;
 
     public List<String> getVersionsByProductId(Long productId) {
-        List<String> versions = versionRepository.getVersionsByProductId(productId);
-        return versions;
+        return versionRepository.getVersionsByProductId(productId);
     }
 }
