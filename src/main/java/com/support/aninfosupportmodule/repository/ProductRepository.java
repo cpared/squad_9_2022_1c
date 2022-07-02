@@ -10,14 +10,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Repository
-public class VersionRepository {
+public class ProductRepository {
 
     private final static String FILEPATH = "products.json";
-    private final HashMap<Long, Product> PRODUCTS = new HashMap<>();
+    private final Map<Long, Product> PRODUCTS = new HashMap<>();
 
-    public VersionRepository() throws IOException {
+    public ProductRepository() throws IOException {
         loadProducts();
     }
 
@@ -29,15 +31,11 @@ public class VersionRepository {
         productsBuff.forEach(p -> PRODUCTS.put(p.getId(), p));
     }
 
-    public List<String> getVersionsByProductId(Long productId) {
-        return getProductById(productId).getVersions();
-    }
-
-    public HashMap<Long, Product> getProducts() {
+    public Map<Long, Product> getProducts() {
         return PRODUCTS;
     }
 
-    public Product getProductById(Long productId) {
-        return PRODUCTS.get(productId);
+    public Optional<Product> getProductById(Long productId) {
+        return Optional.ofNullable(getProducts().get(productId));
     }
 }

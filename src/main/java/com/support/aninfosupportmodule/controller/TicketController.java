@@ -14,7 +14,8 @@ import static java.util.Objects.nonNull;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/soporte/tickets")
+@RequestMapping("/v1/support/tickets")
+@CrossOrigin
 public class TicketController {
 
     private final TicketService ticketService;

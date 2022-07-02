@@ -3,23 +3,21 @@ package com.support.aninfosupportmodule.controller;
 import com.support.aninfosupportmodule.dto.Product;
 import com.support.aninfosupportmodule.service.VersionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/soporte/product")
+@RequestMapping("/v1/support/product")
+@CrossOrigin
 public class VersionController {
 
     private final VersionService versionService;
 
     @GetMapping()
-    public HashMap<Long, Product> getProducts() {
+    public Map<Long, Product> getProducts() {
         return versionService.getProducts();
     }
 
