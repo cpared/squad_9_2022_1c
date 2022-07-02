@@ -1,9 +1,9 @@
 package com.support.aninfosupportmodule.controller;
 
-import com.support.aninfosupportmodule.entity.Version;
 import com.support.aninfosupportmodule.service.VersionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +16,8 @@ public class VersionController {
 
     private final VersionService versionService;
 
-    @GetMapping
-    public List<Version> getVersions() {
-        return versionService.getVersions();
+    @GetMapping("{productId}")
+    public List<String> getVersionsByProductId(@PathVariable Long productId) {
+        return versionService.getVersionsByProductId(productId);
     }
 }
