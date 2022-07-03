@@ -46,7 +46,7 @@ class ProductRepositoryTest {
         assertThat(result).isEqualTo(Optional.empty());
     }
 
-    public static Map<Long, Product> buildProducts() {
+    private static Map<Long, Product> buildProducts() {
         return Map.of(
                 1L, Product.builder()
                         .id(1L)
