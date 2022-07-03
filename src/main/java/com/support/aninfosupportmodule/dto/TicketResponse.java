@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,11 +27,12 @@ public class TicketResponse {
     private Client client;
     private Long productId;
     private String version;
+    private List<Long> relatedTasks;
     private ZonedDateTime creationDate;
     private ZonedDateTime lastUpdate;
     private ZonedDateTime closingDate;
 
-    public static TicketResponse newTicketResponse(Ticket ticket, Employee employee, Client client){
+    public static TicketResponse newTicketResponse(Ticket ticket, Employee employee, Client client, List<Long> tasksList){
         return TicketResponse.builder()
                 .id(ticket.getId())
                 .title(ticket.getTitle())
@@ -42,6 +44,7 @@ public class TicketResponse {
                 .client(client)
                 .productId(ticket.getProductId())
                 .version(ticket.getVersion())
+                .relatedTasks(tasksList)
                 .creationDate(ticket.getCreationDate())
                 .lastUpdate(ticket.getLastUpdate())
                 .closingDate(ticket.getClosingDate())

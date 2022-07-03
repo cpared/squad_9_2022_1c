@@ -1,8 +1,10 @@
 package com.support.aninfosupportmodule.service;
 
 import com.support.aninfosupportmodule.dto.*;
+import com.support.aninfosupportmodule.dto.request.TicketCreationRequest;
+import com.support.aninfosupportmodule.dto.request.TicketUpdateRequest;
 import com.support.aninfosupportmodule.entity.Ticket;
-import com.support.aninfosupportmodule.entity.TicketsTasks;
+import com.support.aninfosupportmodule.entity.TicketTask;
 import com.support.aninfosupportmodule.exception.NotFoundException;
 import com.support.aninfosupportmodule.repository.TicketRepository;
 import com.support.aninfosupportmodule.repository.TicketsTasksRepository;
@@ -46,10 +48,9 @@ public class TicketService {
     }
 
     public List<TicketResponse> getTicketByTaskId(Long taskId) {
-        List<TicketsTasks> data = (List<TicketsTasks>) ticketsTasksRepository.findAll();
-        List<Long> ticketIds = data.stream()
-                .filter(ticketsTasks -> taskId.equals(ticketsTasks.getTaskId()))
-                .map(TicketsTasks::getTicketId)
+        List<Long> ticketIds = getTicketTasks().stream()
+                .filter(ticketTask -> taskId.equals(ticketTask.getTaskId()))
+                .map(TicketTask::getTicketId)
                 .collect(Collectors.toList());
 
         List<Ticket> tickets = (List<Ticket>) ticketRepository.findAllById(ticketIds);
@@ -70,6 +71,17 @@ public class TicketService {
         return ticketResponse;
     }
 
+    public List<Long> getRelatedTasks(Long ticketId) {
+        return getTicketTasks().stream()
+                .filter(ticketTask -> ticketId.equals(ticketTask.getTicketId()))
+                .map(TicketTask::getTaskId)
+                .collect(Collectors.toList());
+    }
+
+    private List<TicketTask> getTicketTasks(){
+        return (List<TicketTask>) ticketsTasksRepository.findAll();
+    }
+
     private Ticket getTicketById(Long ticketId) {
         return ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new NotFoundException("Ticket not found: " + ticketId));
@@ -78,7 +90,8 @@ public class TicketService {
     private TicketResponse mapTicketToTicketResponse(Ticket ticket) {
         Client client = clientService.getClient(ticket.getClientId());
         Employee employee = employeeService.getEmployee(ticket.getAssignedEmployeeId());
-        return newTicketResponse(ticket, employee, client);
+        List<Long> tasksList = getRelatedTasks(ticket.getId());
+        return newTicketResponse(ticket, employee, client, tasksList);
     }
 
     private Ticket updateTicket(Ticket ticket, TicketUpdateRequest request) {
