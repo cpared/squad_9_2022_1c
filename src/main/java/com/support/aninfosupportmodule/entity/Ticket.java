@@ -1,6 +1,7 @@
 package com.support.aninfosupportmodule.entity;
 
 import com.support.aninfosupportmodule.constant.Category;
+import com.support.aninfosupportmodule.constant.TicketStatus;
 import com.support.aninfosupportmodule.dto.TicketRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,13 @@ public class Ticket {
     private String description;
     private Integer severity;
     private Long assignedEmployeeId;
+    @Enumerated(EnumType.STRING)
     private Category category;
+    @Enumerated(EnumType.STRING)
+    private TicketStatus status;
     private Long clientId;
     private Long productId;
-    private Long versionId;
+    private String version;
     private ZonedDateTime creationDate;
     private ZonedDateTime lastUpdate;
     private ZonedDateTime closingDate;
@@ -36,7 +40,7 @@ public class Ticket {
         category = ticketRequest.getCategory();
         clientId = ticketRequest.getClientId();
         productId = ticketRequest.getProductId();
-        versionId = ticketRequest.getVersionId();
+        version = ticketRequest.getVersion();
         creationDate = ZonedDateTime.now();
         lastUpdate = ZonedDateTime.now();
     }
