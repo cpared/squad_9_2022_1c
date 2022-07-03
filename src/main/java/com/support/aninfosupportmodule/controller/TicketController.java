@@ -20,6 +20,11 @@ public class TicketController {
 
     private final TicketService ticketService;
 
+    @DeleteMapping("{ticketId}")
+    public TicketResponse deleteTicket(@PathVariable Long ticketId){
+        return ticketService.deleteTicket(ticketId);
+    }
+
     @PostMapping
     public TicketResponse createTicket(@RequestBody TicketCreationRequest ticketCreationRequest) {
         return ticketService.createTicket(ticketCreationRequest);

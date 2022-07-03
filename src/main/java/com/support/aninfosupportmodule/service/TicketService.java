@@ -3,17 +3,16 @@ package com.support.aninfosupportmodule.service;
 import com.support.aninfosupportmodule.dto.*;
 import com.support.aninfosupportmodule.entity.Ticket;
 import com.support.aninfosupportmodule.entity.TicketsTasks;
+import com.support.aninfosupportmodule.exception.NotFoundException;
 import com.support.aninfosupportmodule.repository.TicketRepository;
 import com.support.aninfosupportmodule.repository.TicketsTasksRepository;
 import com.support.aninfosupportmodule.rest.ClientService;
 import com.support.aninfosupportmodule.rest.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.support.aninfosupportmodule.constant.TicketStatus.CLOSED;
@@ -43,13 +42,7 @@ public class TicketService {
     }
 
     public TicketResponse getWrappedTicketById(Long ticketId) {
-        return getTicketById(ticketId)
-                .map(this::mapTicketToTicketResponse)
-                .orElse(null);
-    }
-
-    public Optional<Ticket> getTicketById(Long ticketId) {
-        return ticketRepository.findById(ticketId);
+        return mapTicketToTicketResponse(getTicketById(ticketId));
     }
 
     public List<TicketResponse> getTicketByTaskId(Long taskId) {
@@ -66,11 +59,20 @@ public class TicketService {
     }
 
     public TicketResponse updateTicket(TicketUpdateRequest ticketUpdateRequest, Long ticketId) {
-        Ticket ticket = getTicketById(ticketId)
-                .map(t -> updateTicket(t, ticketUpdateRequest))
-                .orElseThrow(() -> new NotFoundException("Ticket not found: " + ticketId));
+        Ticket ticket = updateTicket(getTicketById(ticketId), ticketUpdateRequest);
         ticketRepository.save(ticket);
         return mapTicketToTicketResponse(ticket);
+    }
+
+    public TicketResponse deleteTicket(Long ticketId) {
+        TicketResponse ticketResponse = mapTicketToTicketResponse(getTicketById(ticketId));
+        ticketRepository.deleteById(ticketId);
+        return ticketResponse;
+    }
+
+    private Ticket getTicketById(Long ticketId) {
+        return ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new NotFoundException("Ticket not found: " + ticketId));
     }
 
     private TicketResponse mapTicketToTicketResponse(Ticket ticket) {
