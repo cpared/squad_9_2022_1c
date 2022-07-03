@@ -19,5 +19,5 @@ public class TicketRequest {
     private Category category;
     private Long clientId;
     private Long productId;
-    private Long versionId;
+    private String version;
 }
