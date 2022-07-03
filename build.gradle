@@ -35,6 +35,7 @@ dependencies {
     testImplementation("info.cukes:cucumber-junit:1.2.5")
     testImplementation("info.cukes:cucumber-spring:1.2.5")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.1")
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 tasks.named('test') {
