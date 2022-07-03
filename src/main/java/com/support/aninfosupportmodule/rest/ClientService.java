@@ -17,7 +17,7 @@ public class ClientService {
 
     public Client getClient(Long clientId){
         return getAllClients().stream()
-                .filter(c -> clientId.equals(c.getId()))
+                .filter(c -> c.getId().equals(clientId))
                 .findFirst()
                 .orElse(null);
     }
