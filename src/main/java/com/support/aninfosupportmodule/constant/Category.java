@@ -5,6 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public enum Category {
 
     @JsonProperty("error")
-    ERROR
+    ERROR,
+    @JsonProperty("incident")
+    INCIDENT,
+    @JsonProperty("question")
+    QUESTION,
+    @JsonProperty("suggestion")
+    SUGGESTION
 }
 
