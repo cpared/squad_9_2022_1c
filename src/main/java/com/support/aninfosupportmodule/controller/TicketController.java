@@ -1,6 +1,7 @@
 package com.support.aninfosupportmodule.controller;
 
 import com.support.aninfosupportmodule.dto.TicketRequest;
+import com.support.aninfosupportmodule.dto.TicketResponse;
 import com.support.aninfosupportmodule.entity.Ticket;
 import com.support.aninfosupportmodule.service.TicketService;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Objects.nonNull;
 
@@ -21,7 +21,7 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping
-    public Ticket createTicket(@RequestBody TicketRequest ticketRequest) {
+    public TicketResponse createTicket(@RequestBody TicketRequest ticketRequest) {
         return ticketService.create(ticketRequest);
     }
 
@@ -31,7 +31,7 @@ public class TicketController {
     }
 
     @GetMapping
-    public List<Ticket> getTickets(@RequestParam @Nullable Long taskId) {
+    public List<TicketResponse> getTickets(@RequestParam @Nullable Long taskId) {
         if (nonNull(taskId)) {
             return ticketService.getTicketByTaskId(taskId);
         }
@@ -39,7 +39,7 @@ public class TicketController {
     }
 
     @GetMapping("{ticketId}")
-    public Optional<Ticket> getTicketById(@PathVariable Long ticketId) {
+    public TicketResponse getTicketById(@PathVariable Long ticketId) {
         return ticketService.getTicketById(ticketId);
     }
 
