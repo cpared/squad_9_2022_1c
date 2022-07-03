@@ -6,8 +6,14 @@ public enum TicketStatus {
 
     @JsonProperty("pending")
     PENDING,
+    @JsonProperty("in_progress")
+    IN_PROGRESS,
+    @JsonProperty("blocked")
+    BLOCKED,
     @JsonProperty("resolved")
     RESOLVED,
     @JsonProperty("closed")
-    CLOSED
+    CLOSED,
+    @JsonProperty("cancelled")
+    CANCELLED
 }

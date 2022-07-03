@@ -2,7 +2,7 @@ package com.support.aninfosupportmodule.entity;
 
 import com.support.aninfosupportmodule.constant.Category;
 import com.support.aninfosupportmodule.constant.TicketStatus;
-import com.support.aninfosupportmodule.dto.TicketRequest;
+import com.support.aninfosupportmodule.dto.TicketCreationRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     private String title;
@@ -32,15 +32,16 @@ public class Ticket {
     private ZonedDateTime lastUpdate;
     private ZonedDateTime closingDate;
 
-    public Ticket(TicketRequest ticketRequest){
-        title = ticketRequest.getTitle();
-        description = ticketRequest.getDescription();
-        severity = ticketRequest.getSeverity();
-        assignedEmployeeId = ticketRequest.getAssignedEmployeeId();
-        category = ticketRequest.getCategory();
-        clientId = ticketRequest.getClientId();
-        productId = ticketRequest.getProductId();
-        version = ticketRequest.getVersion();
+    public Ticket(TicketCreationRequest ticketCreationRequest){
+        title = ticketCreationRequest.getTitle();
+        description = ticketCreationRequest.getDescription();
+        severity = ticketCreationRequest.getSeverity();
+        assignedEmployeeId = ticketCreationRequest.getAssignedEmployeeId();
+        category = ticketCreationRequest.getCategory();
+        status = TicketStatus.PENDING;
+        clientId = ticketCreationRequest.getClientId();
+        productId = ticketCreationRequest.getProductId();
+        version = ticketCreationRequest.getVersion();
         creationDate = ZonedDateTime.now();
         lastUpdate = ZonedDateTime.now();
     }

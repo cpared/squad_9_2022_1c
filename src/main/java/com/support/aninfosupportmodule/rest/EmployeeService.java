@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.client.WebClient.UriSpec;
 
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class EmployeeService {
 
@@ -18,6 +20,7 @@ public class EmployeeService {
     private final WebClient client = WebClient.create(BASE_URL);
 
     public Employee getEmployee(Long employeeId) {
+        if (isNull(employeeId)) return null;
         UriSpec<RequestBodySpec> uriSpec = client.method(HttpMethod.GET);
         String uri = URI_TEMPLATE_EMPLOYEE_BY_ID + employeeId;
         RequestBodySpec bodySpec = uriSpec.uri(uri);
