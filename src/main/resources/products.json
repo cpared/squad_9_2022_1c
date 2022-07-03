@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Microsoft",
+    "name": "Microsoft Excel",
     "versions": [
       "0.1.0",
       "0.1.1"
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "name": "Google",
+    "name": "Google Lens",
     "versions": [
       "1.0.0",
       "2.0.0"
@@ -17,7 +17,7 @@
   },
   {
     "id": 3,
-    "name": "Sony",
+    "name": "Sony Speaker Manager",
     "versions": [
       "1.0.0",
       "1.0.1",
@@ -26,7 +26,7 @@
   },
   {
     "id": 4,
-    "name": "Nintendo",
+    "name": "Nintendo Sharing System",
     "versions": [
       "1.0.0",
       "1.1.0",
@@ -36,7 +36,7 @@
   },
   {
     "id": 5,
-    "name": "XBox",
+    "name": "XBox Store Stock System",
     "versions": [
       "1.0.0",
       "1.1.0",
@@ -46,7 +46,7 @@
   },
   {
     "id": 6,
-    "name": "Discord",
+    "name": "Discord Music Bot",
     "versions": [
       "0.0.1",
       "0.0.2"
@@ -54,14 +54,14 @@
   },
   {
     "id": 7,
-    "name": "Slack",
+    "name": "Slack Huddle",
     "versions": [
       "1.0.0"
     ]
   },
   {
     "id": 8,
-    "name": "Bugisoft",
+    "name": "Bugisoft AC Origins",
     "versions": [
       "1.0.0",
       "1.1.0"

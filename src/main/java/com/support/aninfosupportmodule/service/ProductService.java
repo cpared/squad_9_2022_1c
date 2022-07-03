@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class VersionService {
+public class ProductService {
 
     private final ProductRepository productRepository;
 

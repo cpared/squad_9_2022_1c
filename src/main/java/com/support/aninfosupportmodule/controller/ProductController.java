@@ -1,7 +1,7 @@
 package com.support.aninfosupportmodule.controller;
 
 import com.support.aninfosupportmodule.dto.Product;
-import com.support.aninfosupportmodule.service.VersionService;
+import com.support.aninfosupportmodule.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,22 +12,22 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/v1/support/product")
 @CrossOrigin
-public class VersionController {
+public class ProductController {
 
-    private final VersionService versionService;
+    private final ProductService productService;
 
     @GetMapping()
     public Map<Long, Product> getProducts() {
-        return versionService.getProducts();
+        return productService.getProducts();
     }
 
     @GetMapping("{productId}")
     public Product getProduct(@PathVariable Long productId) {
-        return versionService.getProduct(productId);
+        return productService.getProduct(productId);
     }
 
     @GetMapping("/version/{productId}")
     public List<String> getVersions(@PathVariable Long productId) {
-        return versionService.getVersions(productId);
+        return productService.getVersions(productId);
     }
 }

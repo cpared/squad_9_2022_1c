@@ -19,10 +19,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class VersionServiceTest {
+class ProductServiceTest {
 
     @InjectMocks
-    private VersionService versionService;
+    private ProductService productService;
 
     @Mock
     private ProductRepository productRepository;
@@ -38,7 +38,7 @@ class VersionServiceTest {
 
         when(productRepository.getProductById(1L)).thenReturn(Optional.of(product));
 
-        List<String> result = versionService.getVersions(1L);
+        List<String> result = productService.getVersions(1L);
 
         assertThat(result).isEqualTo(versions);
 
@@ -57,7 +57,7 @@ class VersionServiceTest {
 
         when(productRepository.getProducts()).thenReturn(products);
 
-        Map<Long, Product> result = versionService.getProducts();
+        Map<Long, Product> result = productService.getProducts();
 
         assertThat(result).isEqualTo(products);
 
@@ -75,7 +75,7 @@ class VersionServiceTest {
 
         when(productRepository.getProductById(1L)).thenReturn(Optional.of(product));
 
-        Product result = versionService.getProduct(1L);
+        Product result = productService.getProduct(1L);
 
         assertThat(result).isEqualTo(product);
 
@@ -86,7 +86,7 @@ class VersionServiceTest {
     void testGetProduct_NotFound() {
         when(productRepository.getProductById(1L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> versionService.getProduct(1L))
+        assertThatThrownBy(() -> productService.getProduct(1L))
                 .isExactlyInstanceOf(NotFoundException.class)
                 .hasMessage("Product does not exist: 1");
 
