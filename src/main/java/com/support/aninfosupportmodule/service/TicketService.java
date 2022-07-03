@@ -1,6 +1,5 @@
 package com.support.aninfosupportmodule.service;
 
-import com.support.aninfosupportmodule.constant.TicketStatus;
 import com.support.aninfosupportmodule.dto.*;
 import com.support.aninfosupportmodule.entity.Ticket;
 import com.support.aninfosupportmodule.entity.TicketsTasks;

@@ -32,10 +32,7 @@ public class TicketController {
 
     @GetMapping
     public List<TicketResponse> getTickets(@RequestParam @Nullable Long taskId) {
-        if (nonNull(taskId)) {
-            return ticketService.getTicketByTaskId(taskId);
-        }
-        return ticketService.getTickets();
+        return nonNull(taskId) ? ticketService.getTicketByTaskId(taskId) : ticketService.getTickets();
     }
 
     @GetMapping("{ticketId}")
