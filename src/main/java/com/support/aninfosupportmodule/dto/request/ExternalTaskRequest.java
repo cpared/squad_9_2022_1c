@@ -17,5 +17,5 @@ public class ExternalTaskRequest {
     private Long idPriority;
     private Long idProject;
     private Long idAsociatedTicket;
-    private boolean bySupport;
+    private boolean bySupportTeam;
 }

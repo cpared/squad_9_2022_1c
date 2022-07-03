@@ -68,7 +68,7 @@ public class ProjectService {
                 .idPriority(request.getPriorityId())
                 .idProject(request.getProjectId())
                 .idAsociatedTicket(request.getRelatedTicketId())
-                .bySupport(true)
+                .bySupportTeam(true)
                 .build();
     }
 }
