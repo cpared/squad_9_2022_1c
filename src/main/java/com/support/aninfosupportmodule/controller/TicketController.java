@@ -1,8 +1,8 @@
 package com.support.aninfosupportmodule.controller;
 
-import com.support.aninfosupportmodule.dto.TicketCreationRequest;
+import com.support.aninfosupportmodule.dto.request.TicketCreationRequest;
 import com.support.aninfosupportmodule.dto.TicketResponse;
-import com.support.aninfosupportmodule.dto.TicketUpdateRequest;
+import com.support.aninfosupportmodule.dto.request.TicketUpdateRequest;
 import com.support.aninfosupportmodule.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -40,9 +40,13 @@ public class TicketController {
         return nonNull(taskId) ? ticketService.getTicketByTaskId(taskId) : ticketService.getTickets();
     }
 
+    @GetMapping("/task/{ticketId}")
+    public List<Long> getRelatedTasks(@PathVariable Long ticketId) {
+        return ticketService.getRelatedTasks(ticketId);
+    }
+
     @GetMapping("{ticketId}")
     public TicketResponse getTicketById(@PathVariable Long ticketId) {
         return ticketService.getWrappedTicketById(ticketId);
     }
-
 }

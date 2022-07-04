@@ -2,16 +2,19 @@ package com.support.aninfosupportmodule.entity;
 
 import com.support.aninfosupportmodule.constant.Category;
 import com.support.aninfosupportmodule.constant.TicketStatus;
-import com.support.aninfosupportmodule.dto.TicketCreationRequest;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.support.aninfosupportmodule.dto.request.TicketCreationRequest;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
-@NoArgsConstructor
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +47,18 @@ public class Ticket {
         version = ticketCreationRequest.getVersion();
         creationDate = ZonedDateTime.now();
         lastUpdate = ZonedDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Ticket ticket = (Ticket) o;
+        return id != null && Objects.equals(id, ticket.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -1,7 +1,6 @@
-package com.support.aninfosupportmodule.dto;
+package com.support.aninfosupportmodule.dto.request;
 
 import com.support.aninfosupportmodule.constant.Category;
-import com.support.aninfosupportmodule.constant.TicketStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketUpdateRequest {
+public class TicketCreationRequest {
 
     private String title;
     private String description;
     private Integer severity;
-    private Long employeeId;
+    private Long assignedEmployeeId;
     private Category category;
-    private TicketStatus status;
+    private Long clientId;
+    private Long productId;
+    private String version;
 }

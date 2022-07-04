@@ -32,7 +32,6 @@ public class EmployeeService {
         UriSpec<RequestBodySpec> uriSpec = client.method(HttpMethod.GET);
         RequestBodySpec bodySpec = uriSpec.uri(BASE_URL);
         return bodySpec.retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Employee>>() {
-                }).block();
+                .bodyToMono(new ParameterizedTypeReference<List<Employee>>() {}).block();
     }
 }
