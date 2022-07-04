@@ -1,6 +1,8 @@
 package com.support.aninfosupportmodule.service;
 
-import com.support.aninfosupportmodule.dto.*;
+import com.support.aninfosupportmodule.dto.Client;
+import com.support.aninfosupportmodule.dto.Employee;
+import com.support.aninfosupportmodule.dto.TicketResponse;
 import com.support.aninfosupportmodule.dto.request.TicketCreationRequest;
 import com.support.aninfosupportmodule.dto.request.TicketUpdateRequest;
 import com.support.aninfosupportmodule.entity.Ticket;
@@ -36,15 +38,28 @@ public class TicketService {
         return mapTicketToTicketResponse(ticket);
     }
 
+    public List<TicketResponse> getTickets(Long taskId, Long productId, String version) {
+        if (nonNull(taskId)) {
+            return getTicketByTaskId(taskId);
+        }
+        if (nonNull(productId) && nonNull(version)) {
+            return getFilteredTickets(productId, version);
+        }
+        return getTickets();
+    }
+
+    private List<TicketResponse> getFilteredTickets(Long productId, String version) {
+        return getTickets().stream()
+                .filter(t -> productId.equals(t.getProductId()))
+                .filter(t -> version.equals(t.getVersion()))
+                .collect(Collectors.toList());
+    }
+
     public List<TicketResponse> getTickets() {
         List<Ticket> tickets = (List<Ticket>) ticketRepository.findAll();
         return tickets.stream()
                 .map(this::mapTicketToTicketResponse)
                 .collect(Collectors.toList());
-    }
-
-    public TicketResponse getWrappedTicketById(Long ticketId) {
-        return mapTicketToTicketResponse(getTicketById(ticketId));
     }
 
     public List<TicketResponse> getTicketByTaskId(Long taskId) {
@@ -57,6 +72,10 @@ public class TicketService {
         return tickets.stream()
                 .map(this::mapTicketToTicketResponse)
                 .collect(Collectors.toList());
+    }
+
+    public TicketResponse getWrappedTicketById(Long ticketId) {
+        return mapTicketToTicketResponse(getTicketById(ticketId));
     }
 
     public TicketResponse updateTicket(TicketUpdateRequest ticketUpdateRequest, Long ticketId) {
@@ -78,7 +97,7 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
-    private List<TicketTask> getTicketTasks(){
+    private List<TicketTask> getTicketTasks() {
         return (List<TicketTask>) ticketsTasksRepository.findAll();
     }
 

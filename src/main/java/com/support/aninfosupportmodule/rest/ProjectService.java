@@ -34,14 +34,14 @@ public class ProjectService {
                 .collect(Collectors.toList());
     }
 
-    public Task createTask(TaskRequest request) throws InternalServerException {
+    public Long createTask(TaskRequest request) throws InternalServerException {
         Task task = createTaskInternal(request);
         if (!task.isSuccess()) {
             throw new InternalServerException("There was an error while creating the task, please try again");
         }
         TicketTask ticketsTask = new TicketTask(request.getRelatedTicketId(), task.getData().getId());
         ticketsTasksRepository.save(ticketsTask);
-        return task;
+        return task.getData().getId();
     }
 
     private Task createTaskInternal(TaskRequest request) {
