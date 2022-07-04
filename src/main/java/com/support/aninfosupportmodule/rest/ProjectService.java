@@ -2,6 +2,7 @@ package com.support.aninfosupportmodule.rest;
 
 import com.support.aninfosupportmodule.dto.Project;
 import com.support.aninfosupportmodule.dto.Task;
+import com.support.aninfosupportmodule.dto.TaskResponse;
 import com.support.aninfosupportmodule.dto.request.ExternalTaskRequest;
 import com.support.aninfosupportmodule.dto.request.TaskRequest;
 import com.support.aninfosupportmodule.entity.TicketTask;
@@ -34,14 +35,16 @@ public class ProjectService {
                 .collect(Collectors.toList());
     }
 
-    public Long createTask(TaskRequest request) throws InternalServerException {
+    public TaskResponse createTask(TaskRequest request) throws InternalServerException {
         Task task = createTaskInternal(request);
         if (!task.isSuccess()) {
             throw new InternalServerException("There was an error while creating the task, please try again");
         }
         TicketTask ticketsTask = new TicketTask(request.getRelatedTicketId(), task.getData().getId());
         ticketsTasksRepository.save(ticketsTask);
-        return task.getData().getId();
+        return TaskResponse.builder()
+                .id(task.getData().getId())
+                .build();
     }
 
     private Task createTaskInternal(TaskRequest request) {
