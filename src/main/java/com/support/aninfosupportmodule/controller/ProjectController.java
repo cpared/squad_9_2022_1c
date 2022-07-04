@@ -1,7 +1,7 @@
 package com.support.aninfosupportmodule.controller;
 
 import com.support.aninfosupportmodule.dto.Project;
-import com.support.aninfosupportmodule.dto.Task;
+import com.support.aninfosupportmodule.dto.TaskResponse;
 import com.support.aninfosupportmodule.dto.request.TaskRequest;
 import com.support.aninfosupportmodule.exception.InternalServerException;
 import com.support.aninfosupportmodule.rest.ProjectService;
@@ -24,7 +24,7 @@ public class ProjectController {
     }
 
     @PostMapping("/task")
-    public Task createTask(@RequestBody TaskRequest request) throws InternalServerException {
+    public TaskResponse createTask(@RequestBody TaskRequest request) throws InternalServerException {
         return projectService.createTask(request);
     }
 }
