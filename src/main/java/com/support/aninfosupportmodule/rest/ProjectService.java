@@ -1,15 +1,15 @@
 package com.support.aninfosupportmodule.rest;
 
 import com.support.aninfosupportmodule.dto.Project;
+import com.support.aninfosupportmodule.dto.ProjectData;
 import com.support.aninfosupportmodule.dto.Task;
-import com.support.aninfosupportmodule.dto.TaskResponse;
+import com.support.aninfosupportmodule.dto.TaskData;
 import com.support.aninfosupportmodule.dto.request.ExternalTaskRequest;
 import com.support.aninfosupportmodule.dto.request.TaskRequest;
 import com.support.aninfosupportmodule.entity.TicketTask;
 import com.support.aninfosupportmodule.exception.InternalServerException;
 import com.support.aninfosupportmodule.repository.TicketsTasksRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,20 +29,20 @@ public class ProjectService {
 
     private final TicketsTasksRepository ticketsTasksRepository;
 
-    public List<Project> getProjects() {
-        return getProjectsInternal().stream()
-                .sorted(Comparator.comparing(Project::getName))
+    public List<ProjectData> getProjects() {
+        return getProjectsInternal().getData().stream()
+                .sorted(Comparator.comparing(ProjectData::getName))
                 .collect(Collectors.toList());
     }
 
-    public TaskResponse createTask(TaskRequest request) throws InternalServerException {
+    public TaskData createTask(TaskRequest request) throws InternalServerException {
         Task task = createTaskInternal(request);
         if (!task.isSuccess()) {
             throw new InternalServerException("There was an error while creating the task, please try again");
         }
         TicketTask ticketsTask = new TicketTask(request.getRelatedTicketId(), task.getData().getId());
         ticketsTasksRepository.save(ticketsTask);
-        return TaskResponse.builder()
+        return TaskData.builder()
                 .id(task.getData().getId())
                 .build();
     }
@@ -55,12 +55,11 @@ public class ProjectService {
                 .bodyToMono(Task.class).block();
     }
 
-    private List<Project> getProjectsInternal() {
+    private Project getProjectsInternal() {
         WebClient.UriSpec<WebClient.RequestBodySpec> uriSpec = client.method(HttpMethod.GET);
         WebClient.RequestBodySpec bodySpec = uriSpec.uri(URI_TEMPLATE_PROJECTS);
         return bodySpec.retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Project>>() {
-                }).block();
+                .bodyToMono(Project.class).block();
     }
 
     private ExternalTaskRequest buildTaskRequest(TaskRequest request) {

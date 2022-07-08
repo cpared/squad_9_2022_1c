@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Task {
+public class ProjectData {
 
-    private boolean success;
-    private TaskData data;
+    private Long id;
+    private String name;
 }
