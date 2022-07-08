@@ -15,3 +15,5 @@ Para realizar el Backend se utilizaron las siguientes herramientas:
 -Base de Datos: Postgres
 -Infraestructura: Heroku
 
+[Swagger](https://squad-9-2022-1c.herokuapp.com/swagger-ui/index.html#/)
+
